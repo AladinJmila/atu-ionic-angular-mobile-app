@@ -8,6 +8,9 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonItem,
+  IonInput,
+  IonButton,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { settingsOutline } from 'ionicons/icons';
@@ -25,6 +28,9 @@ import { settingsOutline } from 'ionicons/icons';
     IonGrid,
     IonRow,
     IonCol,
+    IonItem,
+    IonInput,
+    IonButton,
   ],
 })
 export class HomePage {
