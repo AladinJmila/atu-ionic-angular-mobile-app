@@ -1,7 +1,22 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>countries</ion-title>
-  </ion-toolbar>
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="1" class="ion-padding-start">
+        <ion-icon
+          class="ion-justify-content-end"
+          name="chevron-back-outline"
+          color="primary"
+          size="small"
+          [routerLink]="['/home']"
+        ></ion-icon>
+      </ion-col>
+      <ion-col>
+        <ion-title class="ion-text-center ion-margin-end" color="primary"
+          >Countries</ion-title
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-header>
 
 <ion-content [fullscreen]="true">
