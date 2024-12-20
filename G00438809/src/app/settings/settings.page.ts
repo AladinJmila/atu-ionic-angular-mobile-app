@@ -20,6 +20,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { chevronBackOutline } from 'ionicons/icons';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-settings',
@@ -48,14 +49,21 @@ import { chevronBackOutline } from 'ionicons/icons';
 })
 export class SettingsPage implements OnInit {
   unit: string = 'metric';
-  constructor() {
+  constructor(private dataService: DataService) {
     addIcons({ chevronBackOutline });
   }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    const storedUnit = await this.dataService.get('unit');
+    if (storedUnit) {
+      this.unit = storedUnit;
+    } else {
+      await this.dataService.set('unit', this.unit);
+    }
+  }
 
-  handleUnitSelect(event: any) {
+  async handleUnitSelect(event: any) {
     this.unit = event.detail.value;
-    console.log('Unit selected:', this.unit);
+    await this.dataService.set('unit', this.unit);
   }
 }
