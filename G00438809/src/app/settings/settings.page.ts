@@ -53,7 +53,11 @@ export class SettingsPage implements OnInit {
     addIcons({ chevronBackOutline });
   }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.setData();
+  }
+
+  async setData() {
     const storedUnit = await this.dataService.get('unit');
     if (storedUnit) {
       this.unit = storedUnit;
