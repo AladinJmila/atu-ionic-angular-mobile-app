@@ -11,6 +11,7 @@
             name="settings-outline"
             color="primary"
             size="small"
+            [routerLink]="['/settings']"
           ></ion-icon>
         </ion-col>
       </ion-row>
@@ -20,11 +21,16 @@
 
 <ion-content [fullscreen]="true">
   <ion-item class="ion-margin-top">
-    <ion-input label="Enter Country " placeholder="country name"></ion-input>
+    <ion-input
+      [(ngModel)]="countryName"
+      label="Enter Country "
+      placeholder="country name"
+    ></ion-input>
   </ion-item>
   <ion-button
     class="ion-margin-start ion-margin-end ion-margin-top"
     expand="block"
+    (click)="handleSearch()"
     >Search</ion-button
   >
 </ion-content>

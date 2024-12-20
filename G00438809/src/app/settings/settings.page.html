@@ -1,6 +1,23 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>settings</ion-title>
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="1" class="ion-padding-start">
+          <ion-icon
+            class="ion-justify-content-end"
+            name="chevron-back-outline"
+            color="primary"
+            size="small"
+            [routerLink]="['/home']"
+          ></ion-icon>
+        </ion-col>
+        <ion-col>
+          <ion-title class="ion-text-center ion-margin-end" color="primary"
+            >Settings</ion-title
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
 
@@ -10,4 +27,22 @@
       <ion-title size="large">settings</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Select Your Preferred Unit</ion-label>
+    </ion-list-header>
+    <ion-radio-group
+      [(ngModel)]="unit"
+      (ionChange)="handleUnitSelect($event)"
+      value="metric"
+    >
+      <ion-item><ion-radio value="metric">Metric</ion-radio><br /></ion-item>
+      <ion-item>
+        <ion-radio value="standard">Standard</ion-radio><br
+      /></ion-item>
+      <ion-item
+        ><ion-radio value="imperial">Imperial</ion-radio><br
+      /></ion-item>
+    </ion-radio-group>
+  </ion-list>
 </ion-content>

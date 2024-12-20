@@ -1,20 +1,61 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { RouterLink } from '@angular/router';
+import {
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+  IonRadioGroup,
+  IonRadio,
+  IonList,
+  IonItem,
+  IonListHeader,
+  IonLabel,
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { chevronBackOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    IonIcon,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonRadioGroup,
+    IonRadio,
+    IonList,
+    IonItem,
+    IonListHeader,
+    IonLabel,
+  ],
 })
 export class SettingsPage implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+  unit: string = 'metric';
+  constructor() {
+    addIcons({ chevronBackOutline });
   }
 
+  ngOnInit() {}
+
+  handleUnitSelect(event: any) {
+    this.unit = event.detail.value;
+    console.log('Unit selected:', this.unit);
+  }
 }

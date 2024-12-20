@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -20,6 +22,8 @@ import { settingsOutline } from 'ionicons/icons';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   imports: [
+    FormsModule,
+    RouterLink,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -34,7 +38,13 @@ import { settingsOutline } from 'ionicons/icons';
   ],
 })
 export class HomePage {
+  countryName: string = '';
+
   constructor() {
     addIcons({ settingsOutline });
+  }
+
+  handleSearch() {
+    console.log('Search for:', this.countryName);
   }
 }
