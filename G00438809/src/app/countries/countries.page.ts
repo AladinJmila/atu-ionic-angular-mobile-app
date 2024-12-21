@@ -23,6 +23,17 @@ import { addIcons } from 'ionicons';
 import { chevronBackOutline } from 'ionicons/icons';
 import { DataService } from '../services/data.service';
 
+interface Country {
+  imageUrl: string;
+  name: string;
+  capital: string;
+  code: string;
+  coordiantes: {
+    lat: number;
+    lon: number;
+  };
+}
+
 @Component({
   selector: 'app-countries',
   templateUrl: './countries.page.html',
@@ -50,7 +61,7 @@ import { DataService } from '../services/data.service';
 })
 export class CountriesPage implements OnInit {
   searchTerm: string = '';
-  countries: any[] = [];
+  countries: Country[] = [];
   constructor(
     private httpService: HttpService,
     private dataService: DataService,
@@ -73,7 +84,16 @@ export class CountriesPage implements OnInit {
       const { data } = await this.httpService.get({
         url: `https://restcountries.com/v3.1/name/${this.searchTerm}`,
       });
-      this.countries = data;
+      this.countries = data.map((country: any) => ({
+        imageUrl: country.flags.png,
+        name: country.name.official,
+        capital: country.capital[0],
+        code: country.cca2,
+        coordiantes: {
+          lat: country.latlng[0],
+          lon: country.latlng[1],
+        },
+      }));
       console.log(this.countries);
     } catch (error: any) {
       if (error.status === 404) {
@@ -82,16 +102,19 @@ export class CountriesPage implements OnInit {
     }
   }
 
-  async handleNews(country: any) {
-    await this.dataService.set('countryCode', country.cca2);
+  async handleNews(country: Country) {
+    await this.dataService.set('countryCode', country.code);
     this.router.navigate(['/news']);
   }
 
-  async handleWeather(country: any) {
-    await this.dataService.set('capital', country.capital[0]);
+  async handleWeather(country: Country) {
+    await this.dataService.set('capital', country.capital);
     await this.dataService.set(
       'coordinates',
-      JSON.stringify({ lat: country.latlng[0], lon: country.latlng[1] })
+      JSON.stringify({
+        lat: country.coordiantes.lat,
+        lon: country.coordiantes.lon,
+      })
     );
     this.router.navigate(['/weather']);
   }

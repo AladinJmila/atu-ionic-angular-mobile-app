@@ -25,12 +25,12 @@
   <div *ngIf="countries.length > 0; else noContent">
     <ion-card *ngFor="let country of countries">
       <ion-img
-        src="{{country.flags.png}}"
-        alt="flag of {{country.name.official}}"
+        src="{{country.imageUrl}}"
+        alt="flag of {{country.name}}"
       ></ion-img>
       <ion-card-header>
         <ion-card-title class="ion-text-center"
-          >{{country.name.official}}</ion-card-title
+          >{{country.name}}</ion-card-title
         >
       </ion-card-header>
       <ion-card-content>

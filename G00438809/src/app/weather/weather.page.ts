@@ -22,6 +22,12 @@ import { addIcons } from 'ionicons';
 import { chevronBackOutline } from 'ionicons/icons';
 import { DataService } from '../services/data.service';
 
+interface Weather {
+  icon: string;
+  description: string;
+  temperature: number;
+}
+
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.page.html',
@@ -48,7 +54,7 @@ import { DataService } from '../services/data.service';
 })
 export class WeatherPage implements OnInit {
   capital: string = '';
-  weather = {
+  weather: Weather = {
     icon: '',
     description: '',
     temperature: 0,
