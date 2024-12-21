@@ -11,6 +11,11 @@ import {
   IonIcon,
   IonRow,
   IonCol,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonImg,
 } from '@ionic/angular/standalone';
 import { HttpService } from '../services/http.service';
 import { addIcons } from 'ionicons';
@@ -33,6 +38,12 @@ import { chevronBackOutline } from 'ionicons/icons';
     IonIcon,
     IonRow,
     IonCol,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+
+    IonCardContent,
+    IonImg,
   ],
 })
 export class NewsPage implements OnInit {
