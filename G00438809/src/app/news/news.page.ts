@@ -21,6 +21,13 @@ import { HttpService } from '../services/http.service';
 import { addIcons } from 'ionicons';
 import { chevronBackOutline } from 'ionicons/icons';
 import { DataService } from '../services/data.service';
+import { Country } from '../countries/countries.page';
+
+interface Story {
+  title: string;
+  description: string;
+  image_url: string;
+}
 
 @Component({
   selector: 'app-news',
@@ -48,8 +55,8 @@ import { DataService } from '../services/data.service';
   ],
 })
 export class NewsPage implements OnInit {
-  country: string = '';
-  news: any[] = [];
+  countryName: string = '';
+  news: Story[] = [];
   constructor(
     private httpService: HttpService,
     private dataService: DataService
@@ -64,13 +71,18 @@ export class NewsPage implements OnInit {
   }
 
   async getNews() {
-    this.country = await this.dataService.get('searchTerm');
-    const countryCode = await this.dataService.get('countryCode');
+    const country: Country = JSON.parse(await this.dataService.get('country'));
+    this.countryName = country.name;
     try {
       const { data } = await this.httpService.get({
-        url: `https://newsdata.io/api/1/latest?apikey=pub_62893a1e897ad0c0637bae96b2a805093ac6a&country=${countryCode}`,
+        url: `https://newsdata.io/api/1/latest?apikey=pub_62893a1e897ad0c0637bae96b2a805093ac6a&country=${country.code}`,
       });
-      this.news = data.results;
+      this.news = data.results.map((story: any) => ({
+        title: story.title,
+        description: story.description,
+        image_url: story.image_url,
+      }));
+      console.log(data.results);
       console.log(this.news);
     } catch (error) {
       console.log(error);

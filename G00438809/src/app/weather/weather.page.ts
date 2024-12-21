@@ -21,6 +21,7 @@ import { HttpService } from '../services/http.service';
 import { addIcons } from 'ionicons';
 import { chevronBackOutline } from 'ionicons/icons';
 import { DataService } from '../services/data.service';
+import { Country } from '../countries/countries.page';
 
 interface Weather {
   icon: string;
@@ -73,12 +74,12 @@ export class WeatherPage implements OnInit {
   }
 
   async getWeather() {
-    this.capital = await this.dataService.get('capital');
+    const country: Country = JSON.parse(await this.dataService.get('country'));
+    this.capital = country.capital;
     const unit = await this.dataService.get('unit');
-    const coordinates = JSON.parse(await this.dataService.get('coordinates'));
     try {
       const { data } = await this.httpService.get({
-        url: `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lon}&units=${unit}&APPID=e338c79e350d057275731c2ca19af14f`,
+        url: `https://api.openweathermap.org/data/2.5/weather?lat=${country.coordinates.lat}&lon=${country.coordinates.lon}&units=${unit}&APPID=e338c79e350d057275731c2ca19af14f`,
       });
       this.weather = {
         icon: data.weather[0].icon,
@@ -86,7 +87,6 @@ export class WeatherPage implements OnInit {
         temperature: data.main.temp,
       };
       console.log(data);
-      console.log(this.weather);
     } catch (error) {
       console.log(error);
     }

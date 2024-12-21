@@ -23,12 +23,12 @@ import { addIcons } from 'ionicons';
 import { chevronBackOutline } from 'ionicons/icons';
 import { DataService } from '../services/data.service';
 
-interface Country {
+export interface Country {
   imageUrl: string;
   name: string;
   capital: string;
   code: string;
-  coordiantes: {
+  coordinates: {
     lat: number;
     lon: number;
   };
@@ -78,7 +78,6 @@ export class CountriesPage implements OnInit {
 
   async getCountries() {
     this.searchTerm = await this.dataService.get('searchTerm');
-    console.log(this.searchTerm);
 
     try {
       const { data } = await this.httpService.get({
@@ -89,7 +88,7 @@ export class CountriesPage implements OnInit {
         name: country.name.official,
         capital: country.capital[0],
         code: country.cca2,
-        coordiantes: {
+        coordinates: {
           lat: country.latlng[0],
           lon: country.latlng[1],
         },
@@ -103,19 +102,12 @@ export class CountriesPage implements OnInit {
   }
 
   async handleNews(country: Country) {
-    await this.dataService.set('countryCode', country.code);
+    await this.dataService.set('country', JSON.stringify(country));
     this.router.navigate(['/news']);
   }
 
   async handleWeather(country: Country) {
-    await this.dataService.set('capital', country.capital);
-    await this.dataService.set(
-      'coordinates',
-      JSON.stringify({
-        lat: country.coordiantes.lat,
-        lon: country.coordiantes.lon,
-      })
-    );
+    await this.dataService.set('country', JSON.stringify(country));
     this.router.navigate(['/weather']);
   }
 }
