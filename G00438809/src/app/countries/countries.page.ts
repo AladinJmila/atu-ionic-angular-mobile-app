@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   IonContent,
   IonHeader,
@@ -53,7 +53,8 @@ export class CountriesPage implements OnInit {
   countries: any[] = [];
   constructor(
     private httpService: HttpService,
-    private dataService: DataService
+    private dataService: DataService,
+    private router: Router
   ) {
     addIcons({ chevronBackOutline });
   }
@@ -79,7 +80,9 @@ export class CountriesPage implements OnInit {
     }
   }
 
-  handleNews() {
+  async handleNews(country: any) {
+    await this.dataService.set('countryCode', country.cca2);
+    this.router.navigate(['/news']);
     console.log('news');
   }
 

@@ -20,6 +20,7 @@ import {
 import { HttpService } from '../services/http.service';
 import { addIcons } from 'ionicons';
 import { chevronBackOutline } from 'ionicons/icons';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-news',
@@ -47,8 +48,12 @@ import { chevronBackOutline } from 'ionicons/icons';
   ],
 })
 export class NewsPage implements OnInit {
+  country: string = '';
   news: any[] = [];
-  constructor(private httpService: HttpService) {
+  constructor(
+    private httpService: HttpService,
+    private dataService: DataService
+  ) {
     addIcons({ chevronBackOutline });
   }
 
@@ -57,10 +62,16 @@ export class NewsPage implements OnInit {
   }
 
   async getCountries() {
-    const { data } = await this.httpService.get({
-      url: 'https://newsdata.io/api/1/latest?apikey=pub_62893a1e897ad0c0637bae96b2a805093ac6a&country=ie',
-    });
-    this.news = data.results;
-    console.log(this.news);
+    this.country = await this.dataService.get('searchTerm');
+    const countryCode = await this.dataService.get('countryCode');
+    try {
+      const { data } = await this.httpService.get({
+        url: `https://newsdata.io/api/1/latest?apikey=pub_62893a1e897ad0c0637bae96b2a805093ac6a&country=${countryCode}`,
+      });
+      this.news = data.results;
+      console.log(this.news);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
