@@ -57,11 +57,13 @@ export class NewsPage implements OnInit {
     addIcons({ chevronBackOutline });
   }
 
-  async ngOnInit() {
-    this.getCountries();
+  async ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.getNews();
   }
 
-  async getCountries() {
+  async getNews() {
     this.country = await this.dataService.get('searchTerm');
     const countryCode = await this.dataService.get('countryCode');
     try {

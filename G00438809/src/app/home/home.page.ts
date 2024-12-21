@@ -41,6 +41,10 @@ import { DataService } from '../services/data.service';
 export class HomePage {
   searchTerm: string = '';
 
+  ionViewWillEnter() {
+    this.searchTerm = '';
+  }
+
   constructor(private router: Router, private dataService: DataService) {
     addIcons({ settingsOutline });
   }

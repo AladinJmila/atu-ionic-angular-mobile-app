@@ -60,11 +60,13 @@ export class WeatherPage implements OnInit {
     addIcons({ chevronBackOutline });
   }
 
-  async ngOnInit() {
-    this.getCountries();
+  async ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.getWeather();
   }
 
-  async getCountries() {
+  async getWeather() {
     this.capital = await this.dataService.get('capital');
     const unit = await this.dataService.get('unit');
     const coordinates = JSON.parse(await this.dataService.get('coordinates'));

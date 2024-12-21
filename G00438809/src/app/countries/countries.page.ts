@@ -59,7 +59,9 @@ export class CountriesPage implements OnInit {
     addIcons({ chevronBackOutline });
   }
 
-  async ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillEnter() {
     this.getCountries();
   }
 
@@ -77,7 +79,6 @@ export class CountriesPage implements OnInit {
       if (error.status === 404) {
         console.log('Country not found');
       }
-      this.countries = [];
     }
   }
 
