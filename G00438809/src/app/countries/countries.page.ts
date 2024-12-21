@@ -65,6 +65,7 @@ export class CountriesPage implements OnInit {
 
   async getCountries() {
     this.searchTerm = await this.dataService.get('searchTerm');
+    console.log(this.searchTerm);
 
     try {
       const { data } = await this.httpService.get({
@@ -83,10 +84,14 @@ export class CountriesPage implements OnInit {
   async handleNews(country: any) {
     await this.dataService.set('countryCode', country.cca2);
     this.router.navigate(['/news']);
-    console.log('news');
   }
 
-  handleWeather() {
-    console.log('weather');
+  async handleWeather(country: any) {
+    await this.dataService.set('capital', country.capital[0]);
+    await this.dataService.set(
+      'coordinates',
+      JSON.stringify({ lat: country.latlng[0], lon: country.latlng[1] })
+    );
+    this.router.navigate(['/weather']);
   }
 }

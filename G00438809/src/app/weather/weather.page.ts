@@ -20,6 +20,7 @@ import {
 import { HttpService } from '../services/http.service';
 import { addIcons } from 'ionicons';
 import { chevronBackOutline } from 'ionicons/icons';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-weather',
@@ -46,12 +47,16 @@ import { chevronBackOutline } from 'ionicons/icons';
   ],
 })
 export class WeatherPage implements OnInit {
+  capital: string = '';
   weather = {
     icon: '',
     description: '',
     temperature: 0,
   };
-  constructor(private httpService: HttpService) {
+  constructor(
+    private httpService: HttpService,
+    private dataService: DataService
+  ) {
     addIcons({ chevronBackOutline });
   }
 
@@ -60,15 +65,22 @@ export class WeatherPage implements OnInit {
   }
 
   async getCountries() {
-    const { data } = await this.httpService.get({
-      url: 'https://api.openweathermap.org/data/2.5/weather?lat=53&lon=-8&units=metric&APPID=e338c79e350d057275731c2ca19af14f',
-    });
-    this.weather = {
-      icon: data.weather[0].icon,
-      description: data.weather[0].description,
-      temperature: data.main.temp,
-    };
-    console.log(data);
-    console.log(this.weather);
+    this.capital = await this.dataService.get('capital');
+    const unit = await this.dataService.get('unit');
+    const coordinates = JSON.parse(await this.dataService.get('coordinates'));
+    try {
+      const { data } = await this.httpService.get({
+        url: `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lon}&units=${unit}&APPID=e338c79e350d057275731c2ca19af14f`,
+      });
+      this.weather = {
+        icon: data.weather[0].icon,
+        description: data.weather[0].description,
+        temperature: data.main.temp,
+      };
+      console.log(data);
+      console.log(this.weather);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
