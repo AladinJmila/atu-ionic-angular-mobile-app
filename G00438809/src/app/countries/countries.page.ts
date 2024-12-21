@@ -11,6 +11,12 @@ import {
   IonIcon,
   IonRow,
   IonCol,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonButton,
+  IonImg,
 } from '@ionic/angular/standalone';
 import { HttpService } from '../services/http.service';
 import { addIcons } from 'ionicons';
@@ -33,6 +39,12 @@ import { chevronBackOutline } from 'ionicons/icons';
     IonIcon,
     IonRow,
     IonCol,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonButton,
+    IonImg,
   ],
 })
 export class CountriesPage implements OnInit {
@@ -51,5 +63,13 @@ export class CountriesPage implements OnInit {
     });
     this.countries = data;
     console.log(this.countries);
+  }
+
+  handleNews() {
+    console.log('news');
+  }
+
+  handleWeather() {
+    console.log('weather');
   }
 }

@@ -22,9 +22,24 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">countries</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card *ngFor="let country of countries">
+    <ion-img
+      src="{{country.flags.png}}"
+      alt="flag of {{country.name.official}}"
+    ></ion-img>
+    <ion-card-header>
+      <ion-card-title class="ion-text-center"
+        >{{country.name.official}}</ion-card-title
+      >
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" (click)="handleNews()">News</ion-button>
+      <ion-button
+        class="ion-margin-top"
+        expand="block"
+        (click)="handleWeather()"
+        >Weather</ion-button
+      >
+    </ion-card-content>
+  </ion-card>
 </ion-content>
