@@ -32,6 +32,7 @@
     </ion-card>
     <ion-card *ngFor="let story of news">
       <ion-img
+        *ngIf="story.image_url;"
         src="{{story.image_url}}"
         alt="cover for story: {{story.title}}"
       ></ion-img>
