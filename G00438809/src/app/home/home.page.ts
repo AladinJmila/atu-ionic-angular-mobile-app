@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -16,6 +16,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { settingsOutline } from 'ionicons/icons';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-home',
@@ -38,13 +39,15 @@ import { settingsOutline } from 'ionicons/icons';
   ],
 })
 export class HomePage {
-  countryName: string = '';
+  searchTerm: string = '';
 
-  constructor() {
+  constructor(private router: Router, private dataService: DataService) {
     addIcons({ settingsOutline });
   }
 
-  handleSearch() {
-    console.log('Search for:', this.countryName);
+  async handleSearch() {
+    console.log('Search for:', this.searchTerm);
+    await this.dataService.set('searchTerm', this.searchTerm);
+    this.router.navigate(['/countries']);
   }
 }
